@@ -2,10 +2,16 @@ const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   e2e: {
-    projectId: "4nwxwg", // Reemplaza esto con el ID que copiaste
-    supportFile: "cypress/support/e2e.js",
+    baseUrl: "https://secure.splitwise.com", // URL del sitio que estás probando
     specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}",
-    video: true, // Habilita grabación de video
-    screenshotOnRunFailure: true, // Captura pantalla en fallos
+    video: true,
+    screenshotOnRunFailure: true,
+    reporter: "mochawesome",
+    reporterOptions: {
+      reportDir: "cypress/reports",
+      overwrite: false,
+      html: true,
+      json: true,
+    },
   },
 });
