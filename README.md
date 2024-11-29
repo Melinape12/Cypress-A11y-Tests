@@ -7,8 +7,7 @@ This project includes customized accessibility audits using Cypress and axe-core
 1. **Color Contrast**: Ensures text and background colors meet WCAG standards.
 2. **Alt Text for Images**: Verifies that all images have descriptive alternative text.
 3. **Descriptive Links**: Checks that all links have meaningful, accessible names.
-4. **Landmarks**: Validates that all landmarks have appropriate ARIA roles and labels.
-5. **DOM Order**: Confirms that the DOM order matches the visual and logical order.
+4. **Landmarks(Region)**: Validates that all landmarks have appropriate ARIA roles and labels.
 
 ### Rules Used:
 - `color-contrast`
