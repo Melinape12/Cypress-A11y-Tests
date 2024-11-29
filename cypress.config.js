@@ -1,6 +1,14 @@
 const fs = require("fs");
+const path = require("path");
 
 const generateHTMLReport = (results) => {
+  const reportDir = path.join("cypress", "reports");
+
+  
+  if (!fs.existsSync(reportDir)) {
+    fs.mkdirSync(reportDir, { recursive: true });
+  }
+
   let htmlContent = "<h1>Accessibility Audit Report</h1>";
   results.forEach((result) => {
     const affectedElements = result.nodes.map((node) => node.target).flat().join(", ");
@@ -17,7 +25,7 @@ const generateHTMLReport = (results) => {
   });
 
   
-  fs.writeFileSync("cypress/reports/accessibility.html", htmlContent);
+  fs.writeFileSync(path.join(reportDir, "accessibility.html"), htmlContent);
 };
 
 module.exports = {
@@ -25,9 +33,11 @@ module.exports = {
     setupNodeEvents(on, config) {
       on("task", {
         logAccessibilityResults(results) {
+          const reportDir = path.join("cypress", "reports");
+
           
           fs.writeFileSync(
-            "cypress/reports/accessibility.json",
+            path.join(reportDir, "accessibility.json"),
             JSON.stringify(results, null, 2)
           );
 
@@ -41,4 +51,3 @@ module.exports = {
     },
   },
 };
-
