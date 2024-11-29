@@ -21,7 +21,6 @@ describe("Accessibility Audit with axe-core", () => {
         rule: `Rule violated: ${violation.id}`,
         description: `Description: ${violation.description}`,
         impact: `Impact level: ${violation.impact}`,
-        help: `For more info: ${violation.helpUrl}`,
         nodes: `Affected elements: ${violation.nodes.map((node) => node.target).join(", ")}`,
       }));
       cy.task("logAccessibilityResults", results); 
