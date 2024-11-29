@@ -1,32 +1,30 @@
-describe("Accesibility Audit with axe-core", () => {
+describe("Accessibility Audit with axe-core", () => {
   beforeEach(() => {
-    cy.visit("https://secure.splitwise.com"); // Cambia a la URL que estás probando
-    cy.injectAxe(); // Inyecta axe-core
+    cy.visit("https://splitwise.com"); 
+    cy.injectAxe(); 
   });
 
-  it("Should check accesibility on the entire page", () => {
-    // Auditoría completa de la página
-    cy.checkA11y(null, {
-      runOnly: {
-        type: "tag",
-        values: ["wcag2a", "wcag2aa"], // Estándares que quieres analizar
-      },
-    });
-  });
-
-  it("Should check images missing alt text", () => {
-    cy.checkA11y("img", {
+  it("Should perform specific accessibility audits", () => {
+   
+    const customRules = {
       rules: {
-        "image-alt": { enabled: true }, // Activa específicamente la regla para texto alternativo
+        "color-contrast": { enabled: true }, // Check color contrast
+        "image-alt": { enabled: true }, // Check images for alt text
+        "link-name": { enabled: true }, // Check links for descriptive text
+        "landmark-one-main": { enabled: true }, // Check landmarks for ARIA roles
+        "region": { enabled: true }, // Check for proper ARIA landmarks
       },
-    });
-  });
+    };
 
-  it("Should check color contrast violations", () => {
-    cy.checkA11y(null, {
-      rules: {
-        "color-contrast": { enabled: true }, // Activa específicamente la regla para contraste
-      },
+    cy.checkA11y(null, customRules, (violations) => {
+      const results = violations.map((violation) => ({
+        rule: `Rule violated: ${violation.id}`,
+        description: `Description: ${violation.description}`,
+        impact: `Impact level: ${violation.impact}`,
+        help: `For more info: ${violation.helpUrl}`,
+        nodes: `Affected elements: ${violation.nodes.map((node) => node.target).join(", ")}`,
+      }));
+      cy.task("logAccessibilityResults", results); 
     });
   });
 });
