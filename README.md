@@ -20,4 +20,4 @@ This project includes customized accessibility audits using Cypress and axe-core
 ### How to Run the Tests:
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Melinape12/Accessibility-Cypress.git
+   git clone https://github.com/Melinape12/Cypress-A11y-Tests.git
